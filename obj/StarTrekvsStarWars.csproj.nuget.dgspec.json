@@ -26,7 +26,13 @@
           "https://artifacts.mktp.io/artifactory/api/nuget/nuget-all": {},
           "https://artifacts.mktp.io/artifactory/api/nuget/nuget-branches": {},
           "https://artifacts.mktp.io/artifactory/api/nuget/nuget-master": {},
-          "https://artifacts.mktp.io/artifactory/api/nuget/powershell": {}
+          "https://artifacts.mktp.io/artifactory/api/nuget/powershell": {},
+          "https://nuget.pkg.github.com/im-client/index.json": {},
+          "https://nuget.pkg.github.com/im-customer-engagement/index.json": {},
+          "https://nuget.pkg.github.com/im-enrollment/index.json": {},
+          "https://nuget.pkg.github.com/im-funding/index.json": {},
+          "https://nuget.pkg.github.com/im-platform/index.json": {},
+          "https://nuget.pkg.github.com/im-practices/index.json": {}
         },
         "frameworks": {
           "net6.0": {

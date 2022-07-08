@@ -1,15 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8vxeY2iWJkdooQXzhtytnFIci+KMK+Dgt5maB9iAzA7GSf/NpEvHR0Aij/Nf2YZyMB8njTc//t3ILlGOr9YG8Q==",
+  "dgSpecHash": "W4uwUGl4ueYvwnJHGdRr0bC0804ZhAsjYR8iKiEzy7aSectFOU8IATYQPFlJC82OOwNinlvr8BZjV8InD5sRPg==",
   "success": true,
   "projectFilePath": "C:\\Users\\gigonz\\Documents\\GitHub\\StarTrekvsStarWars\\StarTrekvsStarWars.csproj",
   "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\gigonz\\Documents\\GitHub\\StarTrekvsStarWars\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
