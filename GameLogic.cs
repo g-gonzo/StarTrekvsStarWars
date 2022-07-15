@@ -18,10 +18,8 @@ namespace StarTrekVsStarWars
         {
 
             Console.WriteLine($"Would you like to play a game? (Y)es or (N)o");
-            //Console.ReadLine();
 
             var playerResponse = Console.ReadLine();
-            Console.ReadLine();
 
             if (playerResponse == "y")
             {
@@ -37,11 +35,9 @@ namespace StarTrekVsStarWars
 
         public void StartGame()
         {
-            Console.WriteLine($"Would you like to comapare Star Trek Ships? (Y)es or (N)o");
-            //Console.ReadLine();
+            Console.WriteLine($"Would you like to compare Star Trek Ships? (Y)es or (N)o");
 
             var playerResponse = Console.ReadLine();
-            Console.ReadLine();
 
             if (playerResponse == "y")
             {
