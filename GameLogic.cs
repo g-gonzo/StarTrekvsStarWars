@@ -8,6 +8,10 @@ namespace StarTrekVsStarWars
 {
     public class GameLogic
     {
+        public bool isGameInProgress = true;
+        private bool needToAskUserToPlay = true;
+        private bool needToSelectStarTrekShip = true;
+        private bool needToSelectStarWarsShip = true;
 
         public void TitleBar()
         {
@@ -16,37 +20,90 @@ namespace StarTrekVsStarWars
 
         public void PlayGame()
         {
-
-            Console.WriteLine($"Would you like to play a game? (Y)es or (N)o");
-
-            var playerResponse = Console.ReadLine();
-
-            if (playerResponse == "y")
+            if (needToAskUserToPlay)
             {
-                StartGame();
-                //Console.WriteLine($"TODO - Write Start Game method");
-            }
-            else if (playerResponse == "n")
-            {
-                Console.WriteLine($"TODO - Write Quit/Reset Method");
-            }
+                Console.WriteLine($"Would you like to play a game? (Y)es or (N)o");
+                var playerResponse = Console.ReadLine();
 
+                while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
+                {
+                    Console.WriteLine($"Please enter ONLY Y or N. Would you like to play a game?");
+                    playerResponse = Console.ReadLine();
+                }
+
+                if (playerResponse?.ToLower() == "n")
+                {
+                    isGameInProgress = false;
+                }
+                needToAskUserToPlay = false;
+            }
         }
 
-        public void StartGame()
+        public void CollectStarTrekShip()
         {
-            Console.WriteLine($"Would you like to compare Star Trek Ships? (Y)es or (N)o");
-
-            var playerResponse = Console.ReadLine();
-
-            if (playerResponse == "y")
+            if (needToSelectStarTrekShip && isGameInProgress)
             {
-                //StarTrekShip.GetStarTrekShips();
+                Console.WriteLine($"Please enter a Star Trek Ship Name? (Y)es or (N)o");
+                var playerResponse = Console.ReadLine();
+
                 Console.WriteLine($"TODO - Write Get Star Trek Ships method");
+                needToSelectStarTrekShip = false;
             }
-            else if (playerResponse == "n")
+        }
+
+        public void CollectStarWarsShip()
+        {
+            if (needToSelectStarWarsShip && isGameInProgress)
             {
-                Console.WriteLine($"TODO - Write Quit/Reset Method");
+                Console.WriteLine($"Please enter a Star Wars Ship Name? (Y)es or (N)o");
+                var playerResponse = Console.ReadLine();
+
+                Console.WriteLine($"TODO - Write Get Star Wars Ships method");
+                needToSelectStarWarsShip = false;
+            }
+        }
+
+        public void ConfirmShipSelection()
+        {
+            var goToSwitchingShips = false;
+            if (isGameInProgress)
+            {
+                {
+                    Console.WriteLine($"Would you like change the selected Star Wars Ship? (Y)es or (N)o");
+                    var playerResponse = Console.ReadLine();
+
+                    while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
+                    {
+                        Console.WriteLine($"Please enter ONLY Y or N.");
+                        playerResponse = Console.ReadLine();
+                    }
+
+                    if (playerResponse?.ToLower() == "y")
+                    {
+                        needToSelectStarWarsShip = true;
+                        goToSwitchingShips = true;
+                    }
+
+                    Console.WriteLine($"Would you like change the selected Star Trek Ship? (Y)es or (N)o");
+                    playerResponse = Console.ReadLine();
+
+                    while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
+                    {
+                        Console.WriteLine($"Please enter ONLY Y or N.");
+                        playerResponse = Console.ReadLine();
+                    }
+
+                    if (playerResponse?.ToLower() == "y")
+                    {
+                        needToSelectStarTrekShip = true;
+                        goToSwitchingShips = true;
+                    }
+
+                    if (!goToSwitchingShips)
+                    {
+                        isGameInProgress = false;
+                    }
+                }
             }
         }
 

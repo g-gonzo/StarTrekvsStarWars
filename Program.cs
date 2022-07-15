@@ -46,7 +46,20 @@ namespace StarTrekvsStarWars
             SwShips.Add(new StarWarsShip(12, "TIE Avenger", "Twin ION Engine/ad Advanced", "Star Fighter", 9.8, 0, 0, 16, 133, 1300, 104, "40", 14, 4, 2, 2, 2));
 
             gl.TitleBar();
-            gl.PlayGame();
+            do
+            {
+                gl.PlayGame();
+                gl.CollectStarTrekShip();
+                gl.CollectStarWarsShip();
+                gl.ConfirmShipSelection();
+            } while (gl.isGameInProgress);
+
+            System.Console.WriteLine();
+            System.Console.WriteLine("Thank you for playing the game");
+            System.Console.WriteLine("Press any key to exit...");
+            Console.ReadKey(true);
+
+
             //Console.WriteLine("Please Enter the name of the Star Trek ship.");
             //var StarTrekShipName = Console.ReadLine();
             //System.Console.WriteLine("Please Enter the name of the Star Wars ship.");

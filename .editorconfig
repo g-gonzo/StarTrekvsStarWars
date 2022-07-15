@@ -1,0 +1,35 @@
+# EditorConfig: https://EditorConfig.org
+
+root = true
+
+[*]
+# Completely covers yml, json, css, less, sass
+indent_style = space
+indent_size = 2
+end_of_line = crlf
+charset = utf-8
+insert_final_newline = true
+
+[*.{cs,config,cake,csx}]
+indent_size = 4
+trim_trailing_whitespace = true
+
+[*.{js,jsx}]
+trim_trailing_whitespace = true
+max_line_length = 100
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.sql]
+indent_style = tab
+trim_trailing_whitespace = true
+
+[.yo-rc.json]
+end_of_line = lf
+
+[*.{cs}]
+dotnet_diagnostic.IDE0005.severity = warning #unused imports
+
+csharp_style_namespace_declarations=file_scoped
+dotnet_diagnostic.IDE0161.severity = warning
