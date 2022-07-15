@@ -2,7 +2,6 @@ C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\bin\Debug\net6.0\StarTrekvsS
 C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\bin\Debug\net6.0\StarTrekvsStarWars.deps.json
 C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\bin\Debug\net6.0\StarTrekvsStarWars.runtimeconfig.json
 C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\bin\Debug\net6.0\StarTrekvsStarWars.dll
-C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\bin\Debug\net6.0\ref\StarTrekvsStarWars.dll
 C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\bin\Debug\net6.0\StarTrekvsStarWars.pdb
 C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\obj\Debug\net6.0\StarTrekvsStarWars.csproj.AssemblyReference.cache
 C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\obj\Debug\net6.0\StarTrekvsStarWars.GeneratedMSBuildEditorConfig.editorconfig
@@ -13,3 +12,4 @@ C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\obj\Debug\net6.0\StarTrekvsS
 C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\obj\Debug\net6.0\ref\StarTrekvsStarWars.dll
 C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\obj\Debug\net6.0\StarTrekvsStarWars.pdb
 C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\obj\Debug\net6.0\StarTrekvsStarWars.genruntimeconfig.cache
+C:\Users\gigonz\Documents\GitHub\StarTrekvsStarWars\obj\Debug\net6.0\refint\StarTrekvsStarWars.dll
