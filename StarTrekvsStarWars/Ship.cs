@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarTrekVsStarWars
-{
+namespace StarTrekvsStarWars;
+
 	public abstract class Ship
 	{
 		public int Id { get; internal set; }
@@ -48,4 +48,3 @@ namespace StarTrekVsStarWars
 			this.TourInSpace = tourInSpace;
 		}
 	}
-}
