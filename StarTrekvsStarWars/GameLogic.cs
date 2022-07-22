@@ -69,7 +69,7 @@ public class GameLogic : ConsoleWrapper
         if (isGameInProgress)
         {
             {
-                WriteLine($"Would you like change the selected Star Wars Ship? (Y)es or (N)o");
+                WriteLine($"Would you like to change the selected Star Wars Ship? (Y)es or (N)o");
                 var playerResponse = ReadLine();
 
                 while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
@@ -84,7 +84,7 @@ public class GameLogic : ConsoleWrapper
                     goToSwitchingShips = true;
                 }
 
-                WriteLine($"Would you like change the selected Star Trek Ship? (Y)es or (N)o");
+                WriteLine($"Would you like to change the selected Star Trek Ship? (Y)es or (N)o");
                 playerResponse = ReadLine();
 
                 while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
