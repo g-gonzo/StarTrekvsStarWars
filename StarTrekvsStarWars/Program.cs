@@ -13,19 +13,19 @@ class Program
     {
 
         var gl = new GameLogic();
-
         var reader = new StreamReader(File.OpenRead(@".\StarTrekShips.csv"));
-
         List<StarTrekShip> StShips = new List<StarTrekShip>();
 
-        var headerLine = reader.ReadLine();
-        while (!reader.EndOfStream)
+        FileReader fr = new FileReader();
+        List<string[]> totalFileValues = fr.createListFromFile(reader);
+        foreach (var singleRowValues in totalFileValues)
         {
-            var line = reader.ReadLine();
-            Console.WriteLine(line);
-            var values = line?.Split(',');
+            StShips.Add(new StarTrekShip(singleRowValues));
+        }
 
-            StShips.Add(new StarTrekShip(Int32.Parse(values[0]), values[1], values[2], values[3], Double.Parse(values[4]), Double.Parse(values[5]), Double.Parse(values[6]), Double.Parse(values[7]), Double.Parse(values[8]), Int32.Parse(values[9]), Int32.Parse(values[10]), values[11], Int32.Parse(values[12]), Int32.Parse(values[13]), Int32.Parse(values[14]), Int32.Parse(values[15]), Int32.Parse(values[16])));
+        foreach (var ship in StShips)
+        {
+            Console.WriteLine(ship.Name);
         }
 
         List<StarWarsShip> SwShips = new List<StarWarsShip>();
