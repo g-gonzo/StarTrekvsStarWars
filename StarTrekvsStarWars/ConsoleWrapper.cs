@@ -19,6 +19,11 @@ public class ConsoleWrapper : IConsole
 
     public void WriteLine(string message)
     {
-        Console.WriteLine(message); 
+        Console.WriteLine(message);
+    }
+
+    public void Clear()
+    {
+        Console.Clear();
     }
 }

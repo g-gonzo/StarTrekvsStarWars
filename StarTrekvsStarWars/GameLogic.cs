@@ -15,6 +15,7 @@ public class GameLogic : ConsoleWrapper
 
     public void TitleBar()
     {
+        Clear();
         WriteLine("Star Trek vs Star Wars!");
     }
 
@@ -36,18 +37,61 @@ public class GameLogic : ConsoleWrapper
                 isGameInProgress = false;
             }
             needToAskUserToPlay = false;
+            Clear();
         }
     }
 
-    public void CollectStarTrekShip()
+    public int CollectStarTrekShip(List<StarTrekShip> shipList)
     {
         if (needToSelectStarTrekShip && isGameInProgress)
         {
-            WriteLine($"Please enter a Star Trek Ship Name? (Y)es or (N)o");
-            var playerResponse = ReadLine();
+            int shipCount = shipList.Count;
+            printStarTrekList(shipList);
 
-            WriteLine($"TODO - Write Get Star Trek Ships method");
+            WriteLine("\nPlease select Star Trek Ship. Enter the number from the list above");
+            var playerResponse = ReadLine();
+            int responseNum;
+
+            while (!Int32.TryParse(playerResponse, out responseNum))
+            {
+                Clear();
+                printStarTrekList(shipList);
+                WriteLine($"\n{playerResponse} is not a valid number.");
+                WriteLine("Please enter a number.");
+                playerResponse = ReadLine();
+            }
+
+            while (responseNum == 0 || responseNum > shipCount)
+            {
+                Clear();
+                printStarTrekList(shipList);
+                WriteLine($"\n{responseNum} is not an allowed number within the range.");
+                WriteLine($"Please enter a number between 1 and {shipCount}");
+                playerResponse = ReadLine();
+                while (!Int32.TryParse(playerResponse, out responseNum))
+                {
+                    Clear();
+                    printStarTrekList(shipList);
+                    WriteLine($"\n{playerResponse} is not a valid number.");
+                    WriteLine("Please enter a number.");
+                    playerResponse = ReadLine();
+                }
+            }
             needToSelectStarTrekShip = false;
+            Clear();
+
+            return shipList[responseNum - 1].Id;
+        }
+        return 0;
+    }
+
+    private void printStarTrekList(List<StarTrekShip> shipList)
+    {
+        int shipCount = 1;
+        foreach (var ship in shipList)
+        {
+            WriteLine($"{shipCount}) {ship.Name}");
+            shipCount++;
         }
     }
 
@@ -104,6 +148,7 @@ public class GameLogic : ConsoleWrapper
                     isGameInProgress = false;
                 }
             }
+            Clear();
         }
     }
 

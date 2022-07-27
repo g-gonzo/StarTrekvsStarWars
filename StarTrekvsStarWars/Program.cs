@@ -13,20 +13,10 @@ class Program
     {
 
         var gl = new GameLogic();
-        var reader = new StreamReader(File.OpenRead(@".\StarTrekShips.csv"));
         List<StarTrekShip> StShips = new List<StarTrekShip>();
+        var player = new Player();
 
-        FileReader fr = new FileReader();
-        List<string[]> totalFileValues = fr.createListFromFile(reader);
-        foreach (var singleRowValues in totalFileValues)
-        {
-            StShips.Add(new StarTrekShip(singleRowValues));
-        }
-
-        foreach (var ship in StShips)
-        {
-            Console.WriteLine(ship.Name);
-        }
+        StShips = buildStarTrekList();
 
         List<StarWarsShip> SwShips = new List<StarWarsShip>();
 
@@ -47,7 +37,11 @@ class Program
         do
         {
             gl.PlayGame();
-            gl.CollectStarTrekShip();
+            var selectedId = gl.CollectStarTrekShip(StShips);
+            if (selectedId != 0)
+            {
+                player.selectedStarTrekId = selectedId;
+            }
             gl.CollectStarWarsShip();
             gl.ConfirmShipSelection();
         } while (gl.isGameInProgress);
@@ -65,6 +59,20 @@ class Program
         //System.Console.WriteLine($"This Ship {StarTrekShipName} is better than {StarWarsShipName}");
         //System.Console.WriteLine("Press any key to exit...");
         //Console.ReadKey(true);
+    }
+
+    private static List<StarTrekShip> buildStarTrekList()
+    {
+        List<StarTrekShip> shipList = new List<StarTrekShip>();
+        var reader = new StreamReader(File.OpenRead(@".\StarTrekShips.csv"));
+
+        FileReader fr = new FileReader();
+        List<string[]> totalFileValues = fr.createListFromFile(reader);
+        foreach (var singleRowValues in totalFileValues)
+        {
+            shipList.Add(new StarTrekShip(singleRowValues));
+        }
+        return shipList;
     }
 
 }
