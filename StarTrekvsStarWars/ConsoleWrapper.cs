@@ -24,6 +24,8 @@ public class ConsoleWrapper : IConsole
 
     public void Clear()
     {
-        Console.Clear();
+        //Added the if statment to be able to unit test. I am not 100% why this works
+        //https://stackoverflow.com/questions/31692714/the-handle-is-invalid-exception-in-visual-studio-2015-test-runner
+        if (!Console.IsOutputRedirected) Console.Clear();
     }
 }

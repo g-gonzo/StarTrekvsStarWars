@@ -3,12 +3,21 @@ using StarTrekvsStarWars;
 using System.IO;
 using System;
 using System.Text;
+using System.Collections.Generic;
 
 namespace StarTrekvsStarWarsTest;
 
 [TestClass]
 public class GameLogicTest
 {
+    List<StarTrekShip> starTrekShipList = new List<StarTrekShip>
+    {
+        new StarTrekShip( 1, "nameOne", "thisModel", "thisShipClass", "thisShield"),
+        new StarTrekShip( 2, "nameTwo", "thatModel", "thatShipClass", "thatShield")
+    };
+
+    string starTrekDisplayedList = "1) nameOne\r\n2) nameTwo\r\n";
+
     [TestMethod]
     public void PlayGame_TypeLowerN_ShouldEndTheGame()
     {
@@ -99,22 +108,112 @@ public class GameLogicTest
     }
 
     [TestMethod]
-    public void CollectStarTrekShip_IsGameInProgressIsTrue_NeedToSelectStarTrekShipIsTrue_ShouldPopQuestion()
+    public void CollectStarTrekShip_AnsweringQuestionWithExpectedNumAnswer()
     {
         GameLogic gl = new GameLogic();
         gl.needToSelectStarTrekShip = true;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
-        var stringReader = new StringReader("");
+        var stringReader = new StringReader("1");
         Console.SetIn(stringReader);
 
-        gl.CollectStarTrekShip();
+        var result = gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("Please enter a Star Trek Ship Name? (Y)es or (N)o\r\n" +
-            "TODO - Write Get Star Trek Ships method\r\n", output);
+        Assert.AreEqual(
+            starTrekDisplayedList +
+            "\n" +
+            "Please select Star Trek Ship. Enter the number from the list above\r\n", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
+        Assert.AreEqual(result, 1);
+    }
+
+    [TestMethod]
+    public void CollectStarTrekShip_AnsweringQuestionWithLetters()
+    {
+        GameLogic gl = new GameLogic();
+        gl.needToSelectStarTrekShip = true;
+        gl.isGameInProgress = true;
+        var stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("RandomText");
+        stringBuilder.AppendLine("1");
+        var stringReader = new StringReader(stringBuilder.ToString());
+        Console.SetIn(stringReader);
+
+        var result = gl.CollectStarTrekShip(starTrekShipList);
+
+        var output = stringWriter.ToString();
+        Assert.AreEqual(
+            starTrekDisplayedList +
+            "\n" +
+            "Please select Star Trek Ship. Enter the number from the list above\r\n" +
+            starTrekDisplayedList +
+            "\n" +
+            "RandomText is not a valid number.\r\n" +
+            "Please enter a number.\r\n", output);
+        Assert.IsFalse(gl.needToSelectStarTrekShip);
+        Assert.AreEqual(result, 1);
+    }
+
+    [TestMethod]
+    public void CollectStarTrekShip_AnsweringQuestionWithIncorrectNumbersAndLetters()
+    {
+        GameLogic gl = new GameLogic();
+        gl.needToSelectStarTrekShip = true;
+        gl.isGameInProgress = true;
+        var stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("3");
+        stringBuilder.AppendLine("RandomText");
+        stringBuilder.AppendLine("1");
+        var stringReader = new StringReader(stringBuilder.ToString());
+        Console.SetIn(stringReader);
+
+        var result = gl.CollectStarTrekShip(starTrekShipList);
+
+        var output = stringWriter.ToString();
+        Assert.AreEqual(
+            starTrekDisplayedList +
+            "\n" +
+            "Please select Star Trek Ship. Enter the number from the list above\r\n" +
+            starTrekDisplayedList +
+            "\n" +
+            "3 is not an allowed number within the range.\r\n" +
+            "Please enter a number between 1 and 2\r\n" +
+            starTrekDisplayedList +
+            "\n" +
+            "RandomText is not a valid number.\r\n" +
+            "Please enter a number.\r\n", output);
+        Assert.IsFalse(gl.needToSelectStarTrekShip);
+        Assert.AreEqual(result, 1);
+    }
+
+    [TestMethod]
+    public void CollectStarTrekShip_AnsweringQuestionWithSecondNumberInList()
+    {
+        GameLogic gl = new GameLogic();
+        gl.needToSelectStarTrekShip = true;
+        gl.isGameInProgress = true;
+        var stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("2");
+        var stringReader = new StringReader(stringBuilder.ToString());
+        Console.SetIn(stringReader);
+
+        var result = gl.CollectStarTrekShip(starTrekShipList);
+
+        var output = stringWriter.ToString();
+        Assert.AreEqual(
+            starTrekDisplayedList +
+            "\n" +
+            "Please select Star Trek Ship. Enter the number from the list above\r\n", output);
+        Assert.IsFalse(gl.needToSelectStarTrekShip);
+        Assert.AreEqual(result, 2);
     }
 
     [TestMethod]
@@ -126,11 +225,12 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarTrekShip();
+        var result = gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsTrue(gl.needToSelectStarTrekShip);
+        Assert.AreEqual(result, 0);
     }
 
     [TestMethod]
@@ -142,11 +242,12 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarTrekShip();
+        var result = gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
+        Assert.AreEqual(result, 0);
     }
 
     [TestMethod]
@@ -158,11 +259,12 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarTrekShip();
+        var result = gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
+        Assert.AreEqual(result, 0);
     }
 
     [TestMethod]
