@@ -18,6 +18,14 @@ public class GameLogicTest
 
     string starTrekDisplayedList = "1) nameOne\r\n2) nameTwo\r\n";
 
+    List<StarWarsShip> StarWarsShipList = new List<StarWarsShip>
+    {
+        new StarWarsShip( 1, "nameOne", "thisModel", "thisShipClass", "thisShield"),
+        new StarWarsShip( 2, "nameTwo", "thatModel", "thatShipClass", "thatShield")
+    };
+
+    string StarWarsDisplayedList = "1) nameOne\r\n2) nameTwo\r\n";
+
     [TestMethod]
     public void PlayGame_TypeLowerN_ShouldEndTheGame()
     {
@@ -278,7 +286,7 @@ public class GameLogicTest
         var stringReader = new StringReader("");
         Console.SetIn(stringReader);
 
-        gl.CollectStarWarsShip();
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("Please enter a Star Wars Ship Name? (Y)es or (N)o\r\n" +
@@ -295,7 +303,7 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip();
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
@@ -311,7 +319,7 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip();
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
@@ -327,7 +335,7 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip();
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
