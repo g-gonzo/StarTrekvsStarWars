@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace StarTrekvsStarWars;
-public interface IConsole
+
+public class Player
 {
-    void Write(string message);
-    void WriteLine(string message);
-    string ReadLine();
-    void Clear();
+    public int selectedStarTrekId { get; set; }
+    public int selectedStarWarsId { get; set; }
 }
