@@ -16,6 +16,7 @@ class Program
         List<StarTrekShip> StShips = new List<StarTrekShip>();
         List<StarWarsShip> SwShips = new List<StarWarsShip>();
         var player = new Player();
+        var enemy = new Player();
 
         StShips = buildStarTrekList();
         SwShips = buildStarWarsList();
@@ -29,7 +30,11 @@ class Program
             {
                 player.selectedStarTrekId = selectedId;
             }
-            gl.CollectStarWarsShip(SwShips);
+            var enemyId = gl.CollectStarWarsShip(SwShips);
+            if (enemyId != 0)
+            {
+                enemy.selectedStarWarsId = enemyId;
+            }
             gl.ConfirmShipSelection();
         } while (gl.isGameInProgress);
 
@@ -57,7 +62,7 @@ class Program
     private static List<StarWarsShip> buildStarWarsList()
     {
         List<StarWarsShip> shipList2 = new List<StarWarsShip>();
-        var reader = new StreamReader(File.OpenRead(@".\StarWarsShips.csv"));  // not sure about the shipList ?
+        var reader = new StreamReader(File.OpenRead(@".\StarWarsShips.csv")); 
 
         FileReader fr = new FileReader();
         List<string[]> totalFileValues = fr.createListFromFile(reader);
