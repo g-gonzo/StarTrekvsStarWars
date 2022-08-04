@@ -36,10 +36,44 @@ public class StarWarsShipTest
     }
 
     [TestMethod]
-    public void StarWarsShip_Check_SomeThing()
+    public void StarWarsShip_Check_ShipId()
     {
- 
-     
+        var switem = StarWarsShipList.Find(switem => switem.Id == 2);
+        Assert.IsTrue(switem != null);
     }
 
+    [TestMethod]
+    public void StarWarsShip_Check_ShipName()
+    {
+        var switem = StarWarsShipList.Find(switem => switem.Name == "nameOne");
+        Assert.IsTrue(switem != null);
+    }
+
+    [TestMethod]
+    public void StarWarsShip_Check_ShipModel()
+    {
+        var switem = StarWarsShipList.Find(switem => switem.Model == "thatModel");
+        Assert.IsTrue(switem != null);
+    }
+
+    [TestMethod]
+    public void StarWarsShip_Check_ShipClass()
+    {
+        var switem = StarWarsShipList.Find(switem => switem.ShipClass == "thatShipClass");
+        Assert.IsTrue(switem != null);
+    }
+
+    [TestMethod]
+    public void StarWarsShip_Check_ShipWidth()
+    {
+        var switem = StarWarsShipList.Find(switem => switem.Width == 15.5);
+        Assert.IsTrue(switem != null);
+    }
+
+    [TestMethod]
+    public void StarWarsShip_Check_ShipShields()
+    {
+        var switem = StarWarsShipList.Find(switem => switem.Shields == "55");
+        Assert.IsTrue(switem != null);
+    }
 }
