@@ -10,43 +10,36 @@ namespace StarTrekvsStarWarsTest;
 [TestClass]
 public class StarWarsShipTest
 {
+   
+
+    List<StarWarsShip> StarWarsShipList = new List<StarWarsShip>
+    {
+        new StarWarsShip(1, "nameOne", "thisModel", "thisShipClass", 65.5, 34, 3700, 15, 55, 800, 50, "55", 20, 12, 24, 6, 365),
+        new StarWarsShip(2, "nameTwo", "thatModel", "thatShipClass", 20.5, 15.5, 4000, 20, 75, 875, 30, "15", 10, 2, 4, 6, 5)
+    };
+
     [TestMethod]
-    public void Check_ShipListExists()
+    public void StarWarsShip_Check_ListExists()
     {
         //Arrange
-
-        
+       var swcount = StarWarsShipList.Count;
+        var shipcount = 2;
+        var result = false;
         //Act
-
-
+        if (swcount == shipcount)
+        {
+            result = true;
+        }
+        else { result = false; }   
         //Assert
-
-
+        Assert.IsTrue(result);  
     }
 
     [TestMethod]
-    public void Write_DisplaysThePassedInString()
+    public void StarWarsShip_Check_SomeThing()
     {
-        ConsoleWrapper cw = new ConsoleWrapper();
-        var stringWriter = new StringWriter();
-        Console.SetOut(stringWriter);
-
-        cw.Write("Some Text");
-
-        var output = stringWriter.ToString();
-        Assert.AreEqual("Some Text", output);
+ 
+     
     }
 
-    [TestMethod]
-    public void WriteLine_DisplaysThePassedInString()
-    {
-        ConsoleWrapper cw = new ConsoleWrapper();
-        var stringWriter = new StringWriter();
-        Console.SetOut(stringWriter);
-
-        cw.WriteLine("Some Text");
-
-        var output = stringWriter.ToString();
-        Assert.AreEqual("Some Text\r\n", output);
-    }
 }
