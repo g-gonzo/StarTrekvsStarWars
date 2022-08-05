@@ -283,15 +283,17 @@ public class GameLogicTest
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
-        var stringReader = new StringReader("");
+        var stringReader = new StringReader("1");
         Console.SetIn(stringReader);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("Please enter a Star Wars Ship Name? (Y)es or (N)o\r\n" +
-            "TODO - Write Get Star Wars Ships method\r\n", output);
+        Assert.AreEqual(StarWarsDisplayedList +
+            "\n" +
+            "Please select Star Wars Ship. Enter the number from the list above\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 1);
     }
 
     [TestMethod]
@@ -303,11 +305,12 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsTrue(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 0);
     }
 
     [TestMethod]
@@ -319,11 +322,12 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 0);
     }
 
     [TestMethod]
@@ -335,11 +339,12 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 0);
     }
 
     [TestMethod]
