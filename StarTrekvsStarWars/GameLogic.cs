@@ -12,6 +12,8 @@ public class GameLogic : ConsoleWrapper
     public bool needToAskUserToPlay = true;
     public bool needToSelectStarTrekShip = true;
     public bool needToSelectStarWarsShip = true;
+    public string? selectedStarWarsShipName;
+    public string? selectedStarTrekShipName;
 
     public void TitleBar()
     {
@@ -60,6 +62,8 @@ public class GameLogic : ConsoleWrapper
                 WriteLine("Please enter a number.");
                 playerResponse = ReadLine();
             }
+
+            selectedStarTrekShipName = shipList[responseNum - 1].Name;
 
             while (responseNum == 0 || responseNum > shipCount)
             {
@@ -115,6 +119,8 @@ public class GameLogic : ConsoleWrapper
                 playerResponse = ReadLine();
             }
 
+            selectedStarWarsShipName = shipList[responseNum - 1].Name;
+
             while (responseNum == 0 || responseNum > shipCount)
             {
                 Clear();
@@ -155,7 +161,7 @@ public class GameLogic : ConsoleWrapper
         if (isGameInProgress)
         {
             {
-                WriteLine($"Would you like to change the selected Star Wars Ship? (Y)es or (N)o");
+                WriteLine($"You selected {selectedStarWarsShipName}. Would you like to change your Star Wars ship? (Y)es or (N)o");
                 var playerResponse = ReadLine();
 
                 while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
@@ -170,7 +176,7 @@ public class GameLogic : ConsoleWrapper
                     goToSwitchingShips = true;
                 }
 
-                WriteLine($"Would you like to change the selected Star Trek Ship? (Y)es or (N)o");
+                WriteLine($"You selected {selectedStarTrekShipName}. Would you like to change your Star trek ship? (Y)es or (N)o");
                 playerResponse = ReadLine();
 
                 while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
@@ -189,6 +195,11 @@ public class GameLogic : ConsoleWrapper
                 {
                     isGameInProgress = false;
                 }
+                if (!needToSelectStarWarsShip && !needToSelectStarTrekShip)
+                {
+                    WriteLine($"You have selected {selectedStarTrekShipName} and {selectedStarWarsShipName}.");
+                }
+
             }
             Clear();
         }

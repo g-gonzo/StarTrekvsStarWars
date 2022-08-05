@@ -222,7 +222,10 @@ public class GameLogicTest
             "Please select Star Trek Ship. Enter the number from the list above\r\n", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
         Assert.AreEqual(result, 2);
+        Assert.AreEqual(gl.selectedStarTrekShipName, "nameTwo");
     }
+
+    //Assert.AreEqual(gl.selectedStarWarsShipName, "nameTwo"); Add to CollectStarWarsShip method where the appendLine is selecting a number.
 
     [TestMethod]
     public void CollectStarTrekShip_isGameInProgressIsFalse_needToSelectStarTrekShipIsTrue_ShouldDoNothing()
@@ -435,6 +438,8 @@ public class GameLogicTest
         gl.isGameInProgress = true;
         gl.needToSelectStarWarsShip = false;
         gl.needToSelectStarTrekShip = false;
+        gl.selectedStarTrekShipName = "Excalibur";
+        gl.selectedStarWarsShipName = "Princeton";
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
         var stringBuilder = new StringBuilder();
@@ -448,9 +453,9 @@ public class GameLogicTest
         gl.ConfirmShipSelection();
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("Would you like to change the selected Star Wars Ship? (Y)es or (N)o\r\n" +
+        Assert.AreEqual("You selected Princeton. Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
             "Please enter ONLY Y or N.\r\n" +
-            "Would you like to change the selected Star Trek Ship? (Y)es or (N)o\r\n" +
+            "You selected Excalibur. Would you like to change your Star trek ship? (Y)es or (N)o\r\n" +
             "Please enter ONLY Y or N.\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
