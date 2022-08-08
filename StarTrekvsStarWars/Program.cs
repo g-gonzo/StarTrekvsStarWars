@@ -16,7 +16,6 @@ class Program
         List<StarTrekShip> StShips = new List<StarTrekShip>();
         List<StarWarsShip> SwShips = new List<StarWarsShip>();
         var player = new Player();
-        var enemy = new Player();
 
         StShips = buildStarTrekList();
         SwShips = buildStarWarsList();
@@ -33,7 +32,7 @@ class Program
             var enemyId = gl.CollectStarWarsShip(SwShips);
             if (enemyId != 0)
             {
-                enemy.selectedStarWarsId = enemyId;
+                player.selectedStarWarsId = enemyId;
             }
             gl.ConfirmShipSelection();
         } while (gl.isGameInProgress);
