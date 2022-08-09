@@ -95,15 +95,57 @@ public class GameLogic : ConsoleWrapper
         }
     }
 
-    public void CollectStarWarsShip()
+    public int CollectStarWarsShip(List<StarWarsShip> shipList)
     {
         if (needToSelectStarWarsShip && isGameInProgress)
         {
-            WriteLine($"Please enter a Star Wars Ship Name? (Y)es or (N)o");
-            var playerResponse = ReadLine();
+            int shipCount = shipList.Count;
+            printStarWarsList(shipList);
 
-            WriteLine($"TODO - Write Get Star Wars Ships method");
+            WriteLine("\nPlease select Star Wars Ship. Enter the number from the list above");
+            var playerResponse = ReadLine();
+            int responseNum;
+
+            while (!Int32.TryParse(playerResponse, out responseNum))
+            {
+                Clear();
+                printStarWarsList(shipList);
+                WriteLine($"\n{playerResponse} is not a valid number.");
+                WriteLine("Please enter a number.");
+                playerResponse = ReadLine();
+            }
+
+            while (responseNum == 0 || responseNum > shipCount)
+            {
+                Clear();
+                printStarWarsList(shipList);
+                WriteLine($"\n{responseNum} is not an allowed number within the range.");
+                WriteLine($"Please enter a number between 1 and {shipCount}");
+                playerResponse = ReadLine();
+                while (!Int32.TryParse(playerResponse, out responseNum))
+                {
+                    Clear();
+                    printStarWarsList(shipList);
+                    WriteLine($"\n{playerResponse} is not a valid number.");
+                    WriteLine("Please enter a number.");
+                    playerResponse = ReadLine();
+                }
+            }
             needToSelectStarWarsShip = false;
+            Clear();
+
+            return shipList[responseNum - 1].Id;
+        }
+        return 0;
+    }
+
+    private void printStarWarsList(List<StarWarsShip> shipList)
+    {
+        int shipCount = 1;
+        foreach (var ship in shipList)
+        {
+            WriteLine($"{shipCount}) {ship.Name}");
+            shipCount++;
         }
     }
 

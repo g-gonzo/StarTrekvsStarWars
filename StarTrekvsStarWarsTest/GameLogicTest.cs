@@ -18,6 +18,14 @@ public class GameLogicTest
 
     string starTrekDisplayedList = "1) nameOne\r\n2) nameTwo\r\n";
 
+    List<StarWarsShip> StarWarsShipList = new List<StarWarsShip>
+    {
+        new StarWarsShip( 1, "nameOne", "thisModel", "thisShipClass", "thisShield"),
+        new StarWarsShip( 2, "nameTwo", "thatModel", "thatShipClass", "thatShield")
+    };
+
+    string StarWarsDisplayedList = "1) nameOne\r\n2) nameTwo\r\n";
+
     [TestMethod]
     public void PlayGame_TypeLowerN_ShouldEndTheGame()
     {
@@ -275,15 +283,134 @@ public class GameLogicTest
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
-        var stringReader = new StringReader("");
+        var stringReader = new StringReader("1");
         Console.SetIn(stringReader);
 
-        gl.CollectStarWarsShip();
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("Please enter a Star Wars Ship Name? (Y)es or (N)o\r\n" +
-            "TODO - Write Get Star Wars Ships method\r\n", output);
+        Assert.AreEqual(StarWarsDisplayedList +
+            "\n" +
+            "Please select Star Wars Ship. Enter the number from the list above\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 1);
+    }
+
+    [TestMethod]
+    public void CollectStarWarsShip_FirstWhileLoop_LetterSubmitFail()
+    {
+        GameLogic gl = new GameLogic();
+        gl.needToSelectStarWarsShip = true;
+        gl.isGameInProgress = true;
+        var stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("p");
+        stringBuilder.AppendLine("1");
+        var stringReader = new StringReader(stringBuilder.ToString());
+        Console.SetIn(stringReader);
+
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+
+        var output = stringWriter.ToString();
+        Assert.AreEqual(StarWarsDisplayedList +
+            "\n" +
+            "Please select Star Wars Ship. Enter the number from the list above\r\n" +
+            StarWarsDisplayedList +
+            "\n" +
+            "p is not a valid number.\r\n" +
+            "Please enter a number.\r\n", output);
+        Assert.IsFalse(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 1);
+    }
+
+    [TestMethod]
+    public void CollectStarWarsShip_SecondWhileLoop_LargerNumberThanShipCountFail()
+    {
+        GameLogic gl = new GameLogic();
+        gl.needToSelectStarWarsShip = true;
+        gl.isGameInProgress = true;
+        var stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("3");
+        stringBuilder.AppendLine("1");
+        var stringReader = new StringReader(stringBuilder.ToString());
+        Console.SetIn(stringReader);
+
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+
+        var output = stringWriter.ToString();
+        Assert.AreEqual(StarWarsDisplayedList +
+            "\n" +
+            "Please select Star Wars Ship. Enter the number from the list above\r\n" +
+            StarWarsDisplayedList +
+            "\n" +
+            "3 is not an allowed number within the range.\r\n" +
+            "Please enter a number between 1 and 2\r\n", output);
+        Assert.IsFalse(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 1);
+    }
+
+    [TestMethod]
+    public void CollectStarWarsShip_SecondWhileLoop_SmallerNumberThanShipCountFail()
+    {
+        GameLogic gl = new GameLogic();
+        gl.needToSelectStarWarsShip = true;
+        gl.isGameInProgress = true;
+        var stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("0");
+        stringBuilder.AppendLine("1");
+        var stringReader = new StringReader(stringBuilder.ToString());
+        Console.SetIn(stringReader);
+
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+
+        var output = stringWriter.ToString();
+        Assert.AreEqual(StarWarsDisplayedList +
+            "\n" +
+            "Please select Star Wars Ship. Enter the number from the list above\r\n" +
+            StarWarsDisplayedList +
+            "\n" +
+            "0 is not an allowed number within the range.\r\n" +
+            "Please enter a number between 1 and 2\r\n", output);
+        Assert.IsFalse(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 1);
+    }
+
+    [TestMethod]
+    public void CollectStarWarsShip_ThirdWhileLoop_CheckingForNumberFail()
+    {
+        GameLogic gl = new GameLogic();
+        gl.needToSelectStarWarsShip = true;
+        gl.isGameInProgress = true;
+        var stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("3");
+        stringBuilder.AppendLine("p");
+        stringBuilder.AppendLine("1");
+        var stringReader = new StringReader(stringBuilder.ToString());
+        Console.SetIn(stringReader);
+
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+
+        var output = stringWriter.ToString();
+        Assert.AreEqual(StarWarsDisplayedList +
+            "\n" +
+            "Please select Star Wars Ship. Enter the number from the list above\r\n" +
+            StarWarsDisplayedList +
+            "\n" +
+            "3 is not an allowed number within the range.\r\n" +
+            "Please enter a number between 1 and 2\r\n" +
+            StarWarsDisplayedList +
+            "\n"+
+            "p is not a valid number.\r\n" +
+            "Please enter a number.\r\n", output);
+        Assert.IsFalse(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 1);
     }
 
     [TestMethod]
@@ -295,11 +422,12 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip();
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsTrue(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 0);
     }
 
     [TestMethod]
@@ -311,11 +439,12 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip();
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 0);
     }
 
     [TestMethod]
@@ -327,11 +456,12 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip();
+        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
+        Assert.AreEqual(shipId, 0);
     }
 
     [TestMethod]
