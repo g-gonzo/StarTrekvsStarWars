@@ -485,8 +485,8 @@ public class GameLogicTest
         gl.ConfirmShipSelection();
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("You selected nameOne. Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
-            "You selected nameTwo. Would you like to change your Star trek ship? (Y)es or (N)o\r\n", output);
+        Assert.AreEqual("You selected nameOne.\r\n" + "Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
+            "You selected nameTwo.\r\n" + "Would you like to change your Star Trek ship? (Y)es or (N)o\r\n", output);
         Assert.IsFalse(gl.isGameInProgress);
     }
 
@@ -510,8 +510,8 @@ public class GameLogicTest
         gl.ConfirmShipSelection();
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("You selected nameOne. Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
-            "You selected nameTwo. Would you like to change your Star trek ship? (Y)es or (N)o\r\n", output);
+        Assert.AreEqual("You selected nameOne.\r\n" + "Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
+            "You selected nameTwo.\r\n" + "Would you like to change your Star Trek ship? (Y)es or (N)o\r\n", output);
         Assert.IsTrue(gl.needToSelectStarWarsShip);
         Assert.IsTrue(gl.isGameInProgress);
     }
@@ -536,8 +536,8 @@ public class GameLogicTest
         gl.ConfirmShipSelection();
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("You selected nameOne. Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
-            "You selected nameTwo. Would you like to change your Star trek ship? (Y)es or (N)o\r\n", output);
+        Assert.AreEqual("You selected nameOne.\r\n" + "Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
+            "You selected nameTwo.\r\n" + "Would you like to change your Star Trek ship? (Y)es or (N)o\r\n", output);
         Assert.IsTrue(gl.needToSelectStarWarsShip);
         Assert.IsTrue(gl.needToSelectStarTrekShip);
         Assert.IsTrue(gl.isGameInProgress);
@@ -565,9 +565,9 @@ public class GameLogicTest
         gl.ConfirmShipSelection();
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("You selected Princeton. Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
+        Assert.AreEqual("You selected Princeton.\r\n" + "Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
             "Please enter ONLY Y or N.\r\n" +
-            "You selected Excalibur. Would you like to change your Star trek ship? (Y)es or (N)o\r\n" +
+            "You selected Excalibur.\r\n" + "Would you like to change your Star Trek ship? (Y)es or (N)o\r\n" +
             "Please enter ONLY Y or N.\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
         Assert.IsFalse(gl.needToSelectStarTrekShip);

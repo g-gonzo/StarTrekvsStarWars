@@ -83,7 +83,6 @@ public class GameLogic : ConsoleWrapper
             selectedStarTrekShipName = shipList[responseNum - 1].Name;
             needToSelectStarTrekShip = false;
             Clear();
-
         }
     }
 
@@ -137,7 +136,6 @@ public class GameLogic : ConsoleWrapper
             selectedStarWarsShipName = shipList[responseNum - 1].Name;
             needToSelectStarWarsShip = false;
             Clear();
-
         }
     }
 
@@ -157,13 +155,15 @@ public class GameLogic : ConsoleWrapper
         if (isGameInProgress)
         {
             {
-                WriteLine($"You selected {selectedStarWarsShipName}. Would you like to change your Star Wars ship? (Y)es or (N)o");
+                WriteLine($"You selected {selectedStarWarsShipName}.");
+                WriteLine("Would you like to change your Star Wars ship? (Y)es or (N)o");
                 var playerResponse = ReadLine();
 
                 while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
                 {
                     WriteLine($"Please enter ONLY Y or N.");
                     playerResponse = ReadLine();
+                    Clear();
                 }
 
                 if (playerResponse?.ToLower() == "y")
@@ -172,13 +172,15 @@ public class GameLogic : ConsoleWrapper
                     goToSwitchingShips = true;
                 }
 
-                WriteLine($"You selected {selectedStarTrekShipName}. Would you like to change your Star trek ship? (Y)es or (N)o");
+                WriteLine($"You selected {selectedStarTrekShipName}.");
+                WriteLine("Would you like to change your Star Trek ship? (Y)es or (N)o");
                 playerResponse = ReadLine();
 
                 while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
                 {
                     WriteLine($"Please enter ONLY Y or N.");
                     playerResponse = ReadLine();
+                    Clear();
                 }
 
                 if (playerResponse?.ToLower() == "y")
