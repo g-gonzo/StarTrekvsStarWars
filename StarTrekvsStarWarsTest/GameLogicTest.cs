@@ -126,7 +126,7 @@ public class GameLogicTest
         var stringReader = new StringReader("1");
         Console.SetIn(stringReader);
 
-        var result = gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual(
@@ -134,7 +134,6 @@ public class GameLogicTest
             "\n" +
             "Please select Star Trek Ship. Enter the number from the list above\r\n", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
-        Assert.AreEqual(result, 1);
     }
 
     [TestMethod]
@@ -151,7 +150,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        var result = gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual(
@@ -163,7 +162,6 @@ public class GameLogicTest
             "RandomText is not a valid number.\r\n" +
             "Please enter a number.\r\n", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
-        Assert.AreEqual(result, 1);
     }
 
     [TestMethod]
@@ -181,7 +179,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        var result = gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual(
@@ -197,7 +195,6 @@ public class GameLogicTest
             "RandomText is not a valid number.\r\n" +
             "Please enter a number.\r\n", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
-        Assert.AreEqual(result, 1);
     }
 
     [TestMethod]
@@ -213,7 +210,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        var result = gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual(
@@ -221,11 +218,8 @@ public class GameLogicTest
             "\n" +
             "Please select Star Trek Ship. Enter the number from the list above\r\n", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
-        Assert.AreEqual(result, 2);
         Assert.AreEqual(gl.selectedStarTrekShipName, "nameTwo");
     }
-
-    //Assert.AreEqual(gl.selectedStarWarsShipName, "nameTwo"); Add to CollectStarWarsShip method where the appendLine is selecting a number.
 
     [TestMethod]
     public void CollectStarTrekShip_isGameInProgressIsFalse_needToSelectStarTrekShipIsTrue_ShouldDoNothing()
@@ -236,12 +230,11 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        var result = gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsTrue(gl.needToSelectStarTrekShip);
-        Assert.AreEqual(result, 0);
     }
 
     [TestMethod]
@@ -253,12 +246,11 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        var result = gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
-        Assert.AreEqual(result, 0);
     }
 
     [TestMethod]
@@ -270,12 +262,11 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        var result = gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip(starTrekShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
-        Assert.AreEqual(result, 0);
     }
 
     [TestMethod]
@@ -289,14 +280,14 @@ public class GameLogicTest
         var stringReader = new StringReader("1");
         Console.SetIn(stringReader);
 
-        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual(StarWarsDisplayedList +
             "\n" +
             "Please select Star Wars Ship. Enter the number from the list above\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
-        Assert.AreEqual(shipId, 1);
+        Assert.AreEqual(gl.selectedStarWarsShipName, "nameOne");
     }
 
     [TestMethod]
@@ -313,7 +304,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual(StarWarsDisplayedList +
@@ -324,7 +315,6 @@ public class GameLogicTest
             "p is not a valid number.\r\n" +
             "Please enter a number.\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
-        Assert.AreEqual(shipId, 1);
     }
 
     [TestMethod]
@@ -341,7 +331,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual(StarWarsDisplayedList +
@@ -352,7 +342,6 @@ public class GameLogicTest
             "3 is not an allowed number within the range.\r\n" +
             "Please enter a number between 1 and 2\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
-        Assert.AreEqual(shipId, 1);
     }
 
     [TestMethod]
@@ -369,7 +358,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual(StarWarsDisplayedList +
@@ -380,7 +369,6 @@ public class GameLogicTest
             "0 is not an allowed number within the range.\r\n" +
             "Please enter a number between 1 and 2\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
-        Assert.AreEqual(shipId, 1);
     }
 
     [TestMethod]
@@ -398,7 +386,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual(StarWarsDisplayedList +
@@ -413,7 +401,6 @@ public class GameLogicTest
             "p is not a valid number.\r\n" +
             "Please enter a number.\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
-        Assert.AreEqual(shipId, 1);
     }
 
     [TestMethod]
@@ -425,12 +412,11 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsTrue(gl.needToSelectStarWarsShip);
-        Assert.AreEqual(shipId, 0);
     }
 
     [TestMethod]
@@ -442,12 +428,11 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
-        Assert.AreEqual(shipId, 0);
     }
 
     [TestMethod]
@@ -459,12 +444,11 @@ public class GameLogicTest
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        var shipId = gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip(StarWarsShipList);
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
-        Assert.AreEqual(shipId, 0);
     }
 
     [TestMethod]
@@ -488,6 +472,8 @@ public class GameLogicTest
         gl.isGameInProgress = true;
         gl.needToSelectStarWarsShip = false;
         gl.needToSelectStarTrekShip = false;
+        gl.selectedStarWarsShipName = "nameOne";
+        gl.selectedStarTrekShipName = "nameTwo";
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
         var stringBuilder = new StringBuilder();
@@ -499,8 +485,8 @@ public class GameLogicTest
         gl.ConfirmShipSelection();
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("Would you like to change the selected Star Wars Ship? (Y)es or (N)o\r\n" +
-            "Would you like to change the selected Star Trek Ship? (Y)es or (N)o\r\n", output);
+        Assert.AreEqual("You selected nameOne. Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
+            "You selected nameTwo. Would you like to change your Star trek ship? (Y)es or (N)o\r\n", output);
         Assert.IsFalse(gl.isGameInProgress);
     }
 
@@ -511,6 +497,8 @@ public class GameLogicTest
         gl.isGameInProgress = true;
         gl.needToSelectStarWarsShip = false;
         gl.needToSelectStarTrekShip = false;
+        gl.selectedStarWarsShipName = "nameOne";
+        gl.selectedStarTrekShipName = "nameTwo";
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
         var stringBuilder = new StringBuilder();
@@ -522,8 +510,8 @@ public class GameLogicTest
         gl.ConfirmShipSelection();
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("Would you like to change the selected Star Wars Ship? (Y)es or (N)o\r\n" +
-            "Would you like to change the selected Star Trek Ship? (Y)es or (N)o\r\n", output);
+        Assert.AreEqual("You selected nameOne. Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
+            "You selected nameTwo. Would you like to change your Star trek ship? (Y)es or (N)o\r\n", output);
         Assert.IsTrue(gl.needToSelectStarWarsShip);
         Assert.IsTrue(gl.isGameInProgress);
     }
@@ -535,6 +523,8 @@ public class GameLogicTest
         gl.isGameInProgress = true;
         gl.needToSelectStarWarsShip = false;
         gl.needToSelectStarTrekShip = false;
+        gl.selectedStarWarsShipName = "nameOne";
+        gl.selectedStarTrekShipName = "nameTwo";
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
         var stringBuilder = new StringBuilder();
@@ -546,8 +536,8 @@ public class GameLogicTest
         gl.ConfirmShipSelection();
 
         var output = stringWriter.ToString();
-        Assert.AreEqual("Would you like to change the selected Star Wars Ship? (Y)es or (N)o\r\n" +
-            "Would you like to change the selected Star Trek Ship? (Y)es or (N)o\r\n", output);
+        Assert.AreEqual("You selected nameOne. Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
+            "You selected nameTwo. Would you like to change your Star trek ship? (Y)es or (N)o\r\n", output);
         Assert.IsTrue(gl.needToSelectStarWarsShip);
         Assert.IsTrue(gl.needToSelectStarTrekShip);
         Assert.IsTrue(gl.isGameInProgress);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
 
 namespace StarTrekvsStarWars;
 
@@ -43,7 +44,7 @@ public class GameLogic : ConsoleWrapper
         }
     }
 
-    public int CollectStarTrekShip(List<StarTrekShip> shipList)
+    public void CollectStarTrekShip(List<StarTrekShip> shipList)
     {
         if (needToSelectStarTrekShip && isGameInProgress)
         {
@@ -63,8 +64,6 @@ public class GameLogic : ConsoleWrapper
                 playerResponse = ReadLine();
             }
 
-            selectedStarTrekShipName = shipList[responseNum - 1].Name;
-
             while (responseNum == 0 || responseNum > shipCount)
             {
                 Clear();
@@ -81,12 +80,11 @@ public class GameLogic : ConsoleWrapper
                     playerResponse = ReadLine();
                 }
             }
+            selectedStarTrekShipName = shipList[responseNum - 1].Name;
             needToSelectStarTrekShip = false;
             Clear();
 
-            return shipList[responseNum - 1].Id;
         }
-        return 0;
     }
 
     private void printStarTrekList(List<StarTrekShip> shipList)
@@ -99,7 +97,7 @@ public class GameLogic : ConsoleWrapper
         }
     }
 
-    public int CollectStarWarsShip(List<StarWarsShip> shipList)
+    public void CollectStarWarsShip(List<StarWarsShip> shipList)
     {
         if (needToSelectStarWarsShip && isGameInProgress)
         {
@@ -119,7 +117,6 @@ public class GameLogic : ConsoleWrapper
                 playerResponse = ReadLine();
             }
 
-            selectedStarWarsShipName = shipList[responseNum - 1].Name;
 
             while (responseNum == 0 || responseNum > shipCount)
             {
@@ -137,12 +134,11 @@ public class GameLogic : ConsoleWrapper
                     playerResponse = ReadLine();
                 }
             }
+            selectedStarWarsShipName = shipList[responseNum - 1].Name;
             needToSelectStarWarsShip = false;
             Clear();
 
-            return shipList[responseNum - 1].Id;
         }
-        return 0;
     }
 
     private void printStarWarsList(List<StarWarsShip> shipList)
@@ -194,10 +190,6 @@ public class GameLogic : ConsoleWrapper
                 if (!goToSwitchingShips)
                 {
                     isGameInProgress = false;
-                }
-                if (!needToSelectStarWarsShip && !needToSelectStarTrekShip)
-                {
-                    WriteLine($"You have selected {selectedStarTrekShipName} and {selectedStarWarsShipName}.");
                 }
 
             }

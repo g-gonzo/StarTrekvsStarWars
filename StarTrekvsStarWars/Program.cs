@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StarTrekvsStarWars;
+using static System.Console;
 
 namespace StarTrekvsStarWars;
 
@@ -15,7 +16,6 @@ class Program
         var gl = new GameLogic();
         List<StarTrekShip> StShips = new List<StarTrekShip>();
         List<StarWarsShip> SwShips = new List<StarWarsShip>();
-        var player = new Player();
 
         StShips = buildStarTrekList();
         SwShips = buildStarWarsList();
@@ -24,23 +24,14 @@ class Program
         do
         {
             gl.PlayGame();
-            var selectedId = gl.CollectStarTrekShip(StShips);
-            if (selectedId != 0)
-            {
-                player.selectedStarTrekId = selectedId;
-            }
-            var enemyId = gl.CollectStarWarsShip(SwShips);
-            if (enemyId != 0)
-            {
-                player.selectedStarWarsId = enemyId;
-            }
+            gl.CollectStarTrekShip(StShips);
+            gl.CollectStarWarsShip(SwShips);
             gl.ConfirmShipSelection();
         } while (gl.isGameInProgress);
 
-        System.Console.WriteLine();
-        System.Console.WriteLine("Thank you for playing the game");
-        System.Console.WriteLine("Press any key to exit...");
-        Console.ReadKey(true);
+        WriteLine("Thank you for playing the game");
+        WriteLine("Press any key to exit...");
+        ReadKey(true);
 
     }
 
