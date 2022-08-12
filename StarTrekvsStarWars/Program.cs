@@ -22,8 +22,7 @@ class Program
             var starTrekId = gl.CollectStarTrekShip();
             var StarWarsId = gl.CollectStarWarsShip();
             gl.ConfirmShipSelection();
-            var winningId = gl.CompareShipsAndDetermineWinner(starTrekId, StarWarsId);
-            gl.DisplayWinner(starTrekId, StarWarsId, starTrekId == winningId);
+            gl.DisplayWinner();
         } while (gl.isGameInProgress);
 
         WriteLine("Thank you for playing the game");

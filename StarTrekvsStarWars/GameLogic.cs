@@ -10,6 +10,8 @@ namespace StarTrekvsStarWars;
 public class GameLogic : ConsoleWrapper
 {
     public bool isGameInProgress = true;
+    public bool goToSwitchingShips = false;
+    public bool displayShipSelection = true;
     public bool needToAskUserToPlay = true;
     public bool needToSelectStarTrekShip = true;
     public bool needToSelectStarWarsShip = true;
@@ -52,12 +54,17 @@ public class GameLogic : ConsoleWrapper
         }
     }
 
-    public int CompareShipsAndDetermineWinner(int StarTrekId, int StarWarsId)
+    public string? CompareShipsAndDetermineWinner()
     {
-       var StarTrekShipToCompare = StarTrekShipList.Find(x => x.Id == StarTrekId);
-       var StarWarsShipToCompare = StarWarsShipList.Find(x => x.Id == StarWarsId);
+       var starTrekShipToCompare = StarTrekShipList.Find(x => x.Name == selectedStarTrekShipName);
+       var starWarsShipToCompare = StarWarsShipList.Find(x => x.Name == selectedStarWarsShipName);
 
-       var winner = StarTrekShipToCompare?.SpeedAtmosMax > StarWarsShipToCompare?.SpeedAtmosMax ? StarTrekId : StarWarsId;
+       if (starTrekShipToCompare?.WarpStd == starWarsShipToCompare?.WarpStd)
+        {
+            return "tied";
+        } 
+
+       var winner = starTrekShipToCompare?.WarpStd > starWarsShipToCompare?.WarpStd ? selectedStarTrekShipName : selectedStarWarsShipName;
        return winner;
     }
 
@@ -172,22 +179,21 @@ public class GameLogic : ConsoleWrapper
 
     public void ConfirmShipSelection()
     {
-        var goToSwitchingShips = false;
-        if (isGameInProgress)
+        if (displayShipSelection && isGameInProgress)
         {
             {
                 WriteLine($"You selected {selectedStarWarsShipName}.");
                 WriteLine("Would you like to change your Star Wars ship? (Y)es or (N)o");
-                var playerResponse = ReadLine();
+                var StarWarsPlayerResponse = ReadLine();
 
-                while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
+                while (StarWarsPlayerResponse?.ToLower() != "y" && StarWarsPlayerResponse?.ToLower() != "n")
                 {
                     WriteLine($"Please enter ONLY Y or N.");
-                    playerResponse = ReadLine();
+                    StarWarsPlayerResponse = ReadLine();
                     Clear();
                 }
 
-                if (playerResponse?.ToLower() == "y")
+                if (StarWarsPlayerResponse?.ToLower() == "y")
                 {
                     needToSelectStarWarsShip = true;
                     goToSwitchingShips = true;
@@ -195,39 +201,48 @@ public class GameLogic : ConsoleWrapper
 
                 WriteLine($"You selected {selectedStarTrekShipName}.");
                 WriteLine("Would you like to change your Star Trek ship? (Y)es or (N)o");
-                playerResponse = ReadLine();
+                var StarTrekPlayerResponse = ReadLine();
 
-                while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
+                while (StarTrekPlayerResponse?.ToLower() != "y" && StarTrekPlayerResponse?.ToLower() != "n")
                 {
                     WriteLine($"Please enter ONLY Y or N.");
-                    playerResponse = ReadLine();
+                    StarTrekPlayerResponse = ReadLine();
                     Clear();
                 }
 
-                if (playerResponse?.ToLower() == "y")
+                if (StarTrekPlayerResponse?.ToLower() == "y")
                 {
                     needToSelectStarTrekShip = true;
                     goToSwitchingShips = true;
                 }
-
-                if (!goToSwitchingShips)
+                if (StarTrekPlayerResponse?.ToLower() == "n" && StarWarsPlayerResponse?.ToLower() == "n")
                 {
-                    isGameInProgress = false;
+                    displayShipSelection = false;
+                    goToSwitchingShips = false;
                 }
-
             }
             Clear();
         }
     }
 
-    public void DisplayWinner(int StarTrekId, int StarWarsId, bool StarTrekShipWon)
+    public void DisplayWinner()
     {
-        var starTrekShip = StarTrekShipList.Find(x => x.Id == StarTrekId);
-        var starWarsShip = StarWarsShipList.Find(x => x.Id == StarWarsId);
-
-        WriteLine($"\n{selectedStarTrekShipName} has a speed of {starTrekShip?.SpeedAtmosMax}");
-        WriteLine($"\n{selectedStarWarsShipName} has a speed of {starWarsShip?.SpeedAtmosMax}");
-        WriteLine($"\n{(StarTrekShipWon ? selectedStarTrekShipName : selectedStarWarsShipName)} is the winner! Because they have more speed.");
+        if (!goToSwitchingShips && isGameInProgress)
+        {
+        var results = CompareShipsAndDetermineWinner();
+        var starTrekShip = StarTrekShipList.Find(x => x.Name == selectedStarTrekShipName);
+        var starWarsShip = StarWarsShipList.Find(x => x.Name == selectedStarWarsShipName);
+        WriteLine($"\n{selectedStarTrekShipName} has a speed of {starTrekShip?.WarpStd}");
+        WriteLine($"\n{selectedStarWarsShipName} has a speed of {starWarsShip?.WarpStd}");
+            if (results == "tied")
+            {
+                WriteLine($"\nShips tied, please try again.");
+            } else
+            {
+                WriteLine($"\n{(results == selectedStarTrekShipName ? selectedStarTrekShipName : selectedStarWarsShipName)} is the winner! Because they have more speed.");
+            }
+            isGameInProgress = false;
+        }
     }
 
     public void QuitGame()

@@ -487,7 +487,7 @@ public class GameLogicTest
         var output = stringWriter.ToString();
         Assert.AreEqual("You selected nameOne.\r\n" + "Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
             "You selected nameTwo.\r\n" + "Would you like to change your Star Trek ship? (Y)es or (N)o\r\n", output);
-        Assert.IsFalse(gl.isGameInProgress);
+        Assert.IsTrue(gl.isGameInProgress);
     }
 
     [TestMethod]
@@ -571,6 +571,6 @@ public class GameLogicTest
             "Please enter ONLY Y or N.\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
-        Assert.IsFalse(gl.isGameInProgress);
+        Assert.IsTrue(gl.isGameInProgress);
     }
 }
