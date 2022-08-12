@@ -18,7 +18,7 @@ public class GameLogicTest
 
     string starTrekDisplayedList = "1) nameOne\r\n2) nameTwo\r\n";
 
-    List<StarWarsShip> StarWarsShipList = new List<StarWarsShip>
+    List<StarWarsShip> starWarsShipList = new List<StarWarsShip>
     {
         new StarWarsShip( 1, "nameOne", "thisModel", "thisShipClass", "thisShield"),
         new StarWarsShip( 2, "nameTwo", "thatModel", "thatShipClass", "thatShield")
@@ -29,7 +29,7 @@ public class GameLogicTest
     [TestMethod]
     public void PlayGame_TypeLowerN_ShouldEndTheGame()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
         var stringReader = new StringReader("n");
@@ -46,7 +46,7 @@ public class GameLogicTest
     [TestMethod]
     public void PlayGame_TypeUpperN_ShouldEndTheGame()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
         var stringReader = new StringReader("N");
@@ -63,7 +63,7 @@ public class GameLogicTest
     [TestMethod]
     public void PlayGame_TypeUpperY_ShouldLetTheGameProgress()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
         var stringReader = new StringReader("Y");
@@ -80,7 +80,7 @@ public class GameLogicTest
     [TestMethod]
     public void PlayGame_TypeLowerY_ShouldLetTheGameProgress()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
         var stringReader = new StringReader("y");
@@ -97,7 +97,7 @@ public class GameLogicTest
     [TestMethod]
     public void PlayGame_TypingRandomText_ShouldKeepAskingUntilAProperResponseIsGiven()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
         var stringBuilder = new StringBuilder();
@@ -118,7 +118,7 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarTrekShip_AnsweringQuestionWithExpectedNumAnswer()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarTrekShip = true;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
@@ -126,7 +126,7 @@ public class GameLogicTest
         var stringReader = new StringReader("1");
         Console.SetIn(stringReader);
 
-        gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual(
@@ -139,7 +139,7 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarTrekShip_AnsweringQuestionWithLetters()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarTrekShip = true;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
@@ -150,7 +150,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual(
@@ -167,7 +167,7 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarTrekShip_AnsweringQuestionWithIncorrectNumbersAndLetters()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarTrekShip = true;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
@@ -179,7 +179,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual(
@@ -200,7 +200,7 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarTrekShip_AnsweringQuestionWithSecondNumberInList()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarTrekShip = true;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
@@ -210,7 +210,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual(
@@ -224,13 +224,13 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarTrekShip_isGameInProgressIsFalse_needToSelectStarTrekShipIsTrue_ShouldDoNothing()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarTrekShip = true;
         gl.isGameInProgress = false;
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
@@ -240,13 +240,13 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarTrekShip_isGameInProgressIsTrue_needToSelectStarTrekShipIsFalse_ShouldDoNothing()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarTrekShip = false;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
@@ -256,13 +256,13 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarTrekShip_isGameInProgressIsFalse_needToSelectStarTrekShipIsFalse_ShouldDoNothing()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarTrekShip = false;
         gl.isGameInProgress = false;
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarTrekShip(starTrekShipList);
+        gl.CollectStarTrekShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
@@ -272,7 +272,7 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarWarsShip_isGameInProgressIsTrue_needToSelectStarWarsShipIsTrue_ShouldPopQuestion()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarWarsShip = true;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
@@ -280,7 +280,7 @@ public class GameLogicTest
         var stringReader = new StringReader("1");
         Console.SetIn(stringReader);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual(StarWarsDisplayedList +
@@ -293,7 +293,7 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarWarsShip_FirstWhileLoop_LetterSubmitFail()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarWarsShip = true;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
@@ -304,7 +304,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual(StarWarsDisplayedList +
@@ -320,7 +320,7 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarWarsShip_SecondWhileLoop_LargerNumberThanShipCountFail()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarWarsShip = true;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
@@ -331,7 +331,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual(StarWarsDisplayedList +
@@ -347,7 +347,7 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarWarsShip_SecondWhileLoop_SmallerNumberThanShipCountFail()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarWarsShip = true;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
@@ -358,7 +358,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual(StarWarsDisplayedList +
@@ -374,7 +374,7 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarWarsShip_ThirdWhileLoop_CheckingForNumberFail()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarWarsShip = true;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
@@ -386,7 +386,7 @@ public class GameLogicTest
         var stringReader = new StringReader(stringBuilder.ToString());
         Console.SetIn(stringReader);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual(StarWarsDisplayedList +
@@ -406,13 +406,13 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarWarsShip_isGameInProgressIsFalse_needToSelectStarWarsShipIsTrue_ShouldDoNothing()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarWarsShip = true;
         gl.isGameInProgress = false;
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
@@ -422,13 +422,13 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarWarsShip_isGameInProgressIsTrue_needToSelectStarWarsShipIsFalse()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarWarsShip = false;
         gl.isGameInProgress = true;
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
@@ -438,13 +438,13 @@ public class GameLogicTest
     [TestMethod]
     public void CollectStarWarsShip_isGameInProgressIsFalse_needToSelectStarWarsShipIsFalse_ShouldDoNothing()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.needToSelectStarWarsShip = false;
         gl.isGameInProgress = false;
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
 
-        gl.CollectStarWarsShip(StarWarsShipList);
+        gl.CollectStarWarsShip();
 
         var output = stringWriter.ToString();
         Assert.AreEqual("", output);
@@ -454,7 +454,7 @@ public class GameLogicTest
     [TestMethod]
     public void ConfirmShipSelection_isGameInProgressIsFalse_ShouldDoNothing()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.isGameInProgress = false;
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
@@ -468,7 +468,7 @@ public class GameLogicTest
     [TestMethod]
     public void ConfirmShipSelection_AnsweringEachQuestionWithNo_ShouldEndTheGame()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.isGameInProgress = true;
         gl.needToSelectStarWarsShip = false;
         gl.needToSelectStarTrekShip = false;
@@ -493,7 +493,7 @@ public class GameLogicTest
     [TestMethod]
     public void ConfirmShipSelection_ChangingStarWarsShip_ShouldEnableNeedToSelectStarWarsShip()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.isGameInProgress = true;
         gl.needToSelectStarWarsShip = false;
         gl.needToSelectStarTrekShip = false;
@@ -519,7 +519,7 @@ public class GameLogicTest
     [TestMethod]
     public void ConfirmShipSelection_ChangingBothShips_ShouldSetRespecitveBoolValuesToTrue()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.isGameInProgress = true;
         gl.needToSelectStarWarsShip = false;
         gl.needToSelectStarTrekShip = false;
@@ -546,7 +546,7 @@ public class GameLogicTest
     [TestMethod]
     public void ConfirmShipSelection_BothQuestionsLoopWhenIncorrectAnswerIsGiven()
     {
-        GameLogic gl = new GameLogic();
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.isGameInProgress = true;
         gl.needToSelectStarWarsShip = false;
         gl.needToSelectStarTrekShip = false;

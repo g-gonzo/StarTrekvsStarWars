@@ -13,20 +13,17 @@ class Program
     static void Main(string[] args)
     {
 
-        var gl = new GameLogic();
-        List<StarTrekShip> StShips = new List<StarTrekShip>();
-        List<StarWarsShip> SwShips = new List<StarWarsShip>();
-
-        StShips = buildStarTrekList();
-        SwShips = buildStarWarsList();
+        var gl = new GameLogic(buildStarTrekList(), buildStarWarsList());
 
         gl.TitleBar();
         do
         {
             gl.PlayGame();
-            gl.CollectStarTrekShip(StShips);
-            gl.CollectStarWarsShip(SwShips);
+            var starTrekId = gl.CollectStarTrekShip();
+            var StarWarsId = gl.CollectStarWarsShip();
             gl.ConfirmShipSelection();
+            var winningId = gl.CompareShipsAndDetermineWinner(starTrekId, StarWarsId);
+            gl.DisplayWinner(starTrekId, StarWarsId, starTrekId == winningId);
         } while (gl.isGameInProgress);
 
         WriteLine("Thank you for playing the game");
