@@ -19,8 +19,8 @@ class Program
         do
         {
             gl.PlayGame();
-            var starTrekId = gl.CollectStarTrekShip();
-            var StarWarsId = gl.CollectStarWarsShip();
+            gl.CollectStarTrekShip();
+            gl.CollectStarWarsShip();
             gl.ConfirmShipSelection();
             gl.DisplayWinner();
         } while (gl.isGameInProgress);
