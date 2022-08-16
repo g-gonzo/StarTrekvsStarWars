@@ -575,52 +575,40 @@ public class GameLogicTest
     }
 
     [TestMethod]
-    public void CompareShipsAndDetermineWinner_WhenShipsCompared_returnsTied()
+    public void DisplayWinner_WhenShipsTie_writesCorrectText()
     {
         GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.isGameInProgress = true;
         gl.needToSelectStarWarsShip = false;
         gl.needToSelectStarTrekShip = false;
-        var starTrekShip = gl.selectedStarTrekShipName = "StarTrekNameOne";
-        var starWarsShip = gl.selectedStarWarsShipName = "StarWarsNameOne";
+        gl.selectedStarTrekShipName = "StarTrekNameOne";
+        gl.selectedStarWarsShipName = "StarWarsNameOne";
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
-        var stringBuilder = new StringBuilder();
-        stringBuilder.AppendLine("n");
-        stringBuilder.AppendLine("n");
-        var stringReader = new StringReader(stringBuilder.ToString());
-        Console.SetIn(stringReader);
 
-        gl.ConfirmShipSelection();
-        var results = gl.CompareShipsAndDetermineWinner(starTrekShip, starWarsShip);
+        gl.DisplayWinner();
 
-        var output = stringWriter.ToString();
-        Assert.AreEqual("You selected StarWarsNameOne.\r\n" + "Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
-            "You selected StarTrekNameOne.\r\n" + "Would you like to change your Star Trek ship? (Y)es or (N)o\r\n", output);
-        Assert.AreEqual("tied", results);
+        Assert.IsTrue(stringWriter.ToString().Contains("StarTrekNameOne has a speed of 6"));
+        Assert.IsTrue(stringWriter.ToString().Contains("StarWarsNameOne has a speed of 6"));
+        Assert.IsTrue(stringWriter.ToString().Contains("Ships tied, please try again."));
     }
 
     [TestMethod]
-    public void CompareShipsAndDetermineWinner_WhenShipsCompared_returnsWinner()
+    public void DisplayWinner_WhenShipWon_DisplaysWinner()
     {
         GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
         gl.isGameInProgress = true;
         gl.needToSelectStarWarsShip = false;
         gl.needToSelectStarTrekShip = false;
-        var starTrekShip = gl.selectedStarTrekShipName = "StarTrekNameOne";
-        var starWarsShip = gl.selectedStarWarsShipName = "StarWarsNameTwo";
+        gl.selectedStarTrekShipName = "StarTrekNameOne";
+        gl.selectedStarWarsShipName = "StarWarsNameTwo";
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
-        var stringBuilder = new StringBuilder();
-        stringBuilder.AppendLine("n");
-        stringBuilder.AppendLine("n");
-        var stringReader = new StringReader(stringBuilder.ToString());
-        Console.SetIn(stringReader);
 
-        //var winner = gl.CompareShipsAndDetermineWinner(starTrekShip, starWarsShip);
         gl.DisplayWinner();
 
-        var output = stringWriter.ToString();
-        //Assert.AreEqual("StarWarsNameTwo", winner);
+        Assert.IsTrue(stringWriter.ToString().Contains("StarTrekNameOne has a speed of 6"));
+        Assert.IsTrue(stringWriter.ToString().Contains("StarWarsNameTwo has a speed of 7"));
+        Assert.IsTrue(stringWriter.ToString().Contains("StarWarsNameTwo is the winner! Because they have more speed."));
     }
 }
