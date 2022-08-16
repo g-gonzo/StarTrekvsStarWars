@@ -19,10 +19,6 @@ public class StarWarsShip : Ship
     public StarWarsShip(string[] values) : base(values)
     {
     }
-    public StarWarsShip(int id, string name, string model, string shipClass, string shields) : base(id, name, model, shipClass, shields)
-    {
-        
-    }
 
     public void GetStarWarsShips()
     {

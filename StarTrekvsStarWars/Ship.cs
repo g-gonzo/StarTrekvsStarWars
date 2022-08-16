@@ -35,14 +35,6 @@ public abstract class Ship
         this.Shields = shields;
         this.WarpStd = shipSpeed;
     }
-    public Ship(int id, string name, string model, string shipClass, string shields)
-    {
-        this.Id = id;
-        this.Name = name;
-        this.Model = model;
-        this.ShipClass = shipClass;
-        this.Shields = shields;
-    }
     public Ship(int id, string name, string model, string shipClass, double length, double width, double warpStd, double warpCrs, double warpMax, int speedAtmosMax,
       int maneuverability, string shields, int hull, int phasers, int torpedoes, int missiles, int tourInSpace)
     {
