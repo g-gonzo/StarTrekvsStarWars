@@ -1,9 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StarTrekvsStarWars;
-using System.IO;
-using System;
-using System.Text;
-using System.Collections.Generic;
 
 namespace StarTrekvsStarWarsTest;
 
@@ -12,19 +12,19 @@ public class GameLogicTest
 {
     List<StarTrekShip> starTrekShipList = new List<StarTrekShip>
     {
-        new StarTrekShip( 1, "nameOne", "thisModel", "thisShipClass", "thisShield"),
-        new StarTrekShip( 2, "nameTwo", "thatModel", "thatShipClass", "thatShield")
+        new StarTrekShip( 1, "StarTrekNameOne", "thisModel", "thisShipClass", "thisShield", 6),
+        new StarTrekShip( 2, "StarTrekNameTwo", "thatModel", "thatShipClass", "thatShield", 11)
     };
 
-    string starTrekDisplayedList = "1) nameOne\r\n2) nameTwo\r\n";
+    string starTrekDisplayedList = "1) StarTrekNameOne\r\n2) StarTrekNameTwo\r\n";
 
     List<StarWarsShip> starWarsShipList = new List<StarWarsShip>
     {
-        new StarWarsShip( 1, "nameOne", "thisModel", "thisShipClass", "thisShield"),
-        new StarWarsShip( 2, "nameTwo", "thatModel", "thatShipClass", "thatShield")
+        new StarWarsShip( 1, "StarWarsNameOne", "thisModel", "thisShipClass", "thisShield", 6),
+        new StarWarsShip( 2, "StarWarsNameTwo", "thatModel", "thatShipClass", "thatShield", 7)
     };
 
-    string StarWarsDisplayedList = "1) nameOne\r\n2) nameTwo\r\n";
+    string StarWarsDisplayedList = "1) StarWarsNameOne\r\n2) StarWarsNameTwo\r\n";
 
     [TestMethod]
     public void PlayGame_TypeLowerN_ShouldEndTheGame()
@@ -218,7 +218,7 @@ public class GameLogicTest
             "\n" +
             "Please select Star Trek Ship. Enter the number from the list above\r\n", output);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
-        Assert.AreEqual(gl.selectedStarTrekShipName, "nameTwo");
+        Assert.AreEqual(gl.selectedStarTrekShipName, "StarTrekNameTwo");
     }
 
     [TestMethod]
@@ -287,7 +287,7 @@ public class GameLogicTest
             "\n" +
             "Please select Star Wars Ship. Enter the number from the list above\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
-        Assert.AreEqual(gl.selectedStarWarsShipName, "nameOne");
+        Assert.AreEqual(gl.selectedStarWarsShipName, "StarWarsNameOne");
     }
 
     [TestMethod]
@@ -397,7 +397,7 @@ public class GameLogicTest
             "3 is not an allowed number within the range.\r\n" +
             "Please enter a number between 1 and 2\r\n" +
             StarWarsDisplayedList +
-            "\n"+
+            "\n" +
             "p is not a valid number.\r\n" +
             "Please enter a number.\r\n", output);
         Assert.IsFalse(gl.needToSelectStarWarsShip);
@@ -572,5 +572,55 @@ public class GameLogicTest
         Assert.IsFalse(gl.needToSelectStarWarsShip);
         Assert.IsFalse(gl.needToSelectStarTrekShip);
         Assert.IsTrue(gl.isGameInProgress);
+    }
+
+    [TestMethod]
+    public void CompareShipsAndDetermineWinner_WhenShipsCompared_returnsTied()
+    {
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
+        gl.isGameInProgress = true;
+        gl.needToSelectStarWarsShip = false;
+        gl.needToSelectStarTrekShip = false;
+        var starTrekShip = gl.selectedStarTrekShipName = "StarTrekNameOne";
+        var starWarsShip = gl.selectedStarWarsShipName = "StarWarsNameOne";
+        var stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("n");
+        stringBuilder.AppendLine("n");
+        var stringReader = new StringReader(stringBuilder.ToString());
+        Console.SetIn(stringReader);
+
+        gl.ConfirmShipSelection();
+        var results = gl.CompareShipsAndDetermineWinner(starTrekShip, starWarsShip);
+
+        var output = stringWriter.ToString();
+        Assert.AreEqual("You selected StarWarsNameOne.\r\n" + "Would you like to change your Star Wars ship? (Y)es or (N)o\r\n" +
+            "You selected StarTrekNameOne.\r\n" + "Would you like to change your Star Trek ship? (Y)es or (N)o\r\n", output);
+        Assert.AreEqual("tied", results);
+    }
+
+    [TestMethod]
+    public void CompareShipsAndDetermineWinner_WhenShipsCompared_returnsWinner()
+    {
+        GameLogic gl = new GameLogic(starTrekShipList, starWarsShipList);
+        gl.isGameInProgress = true;
+        gl.needToSelectStarWarsShip = false;
+        gl.needToSelectStarTrekShip = false;
+        var starTrekShip = gl.selectedStarTrekShipName = "StarTrekNameOne";
+        var starWarsShip = gl.selectedStarWarsShipName = "StarWarsNameTwo";
+        var stringWriter = new StringWriter();
+        Console.SetOut(stringWriter);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("n");
+        stringBuilder.AppendLine("n");
+        var stringReader = new StringReader(stringBuilder.ToString());
+        Console.SetIn(stringReader);
+
+        //var winner = gl.CompareShipsAndDetermineWinner(starTrekShip, starWarsShip);
+        gl.DisplayWinner();
+
+        var output = stringWriter.ToString();
+        //Assert.AreEqual("StarWarsNameTwo", winner);
     }
 }

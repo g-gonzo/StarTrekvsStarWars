@@ -26,6 +26,15 @@ public abstract class Ship
     public int Missiles { get; internal set; }
     public int TourInSpace { get; internal set; }
 
+    public Ship(int id, string name, string model, string shipClass, string shields, int shipSpeed)
+    {
+        this.Id = id;
+        this.Name = name;
+        this.Model = model;
+        this.ShipClass = shipClass;
+        this.Shields = shields;
+        this.WarpStd = shipSpeed;
+    }
     public Ship(int id, string name, string model, string shipClass, string shields)
     {
         this.Id = id;

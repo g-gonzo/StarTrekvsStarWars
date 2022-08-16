@@ -54,7 +54,7 @@ public class GameLogic : ConsoleWrapper
         }
     }
 
-    public string? CompareShipsAndDetermineWinner()
+    public string? CompareShipsAndDetermineWinner(string starWarsShip, string starTrekShip)
     {
        var starTrekShipToCompare = StarTrekShipList.Find(x => x.Name == selectedStarTrekShipName);
        var starWarsShipToCompare = StarWarsShipList.Find(x => x.Name == selectedStarWarsShipName);
@@ -229,9 +229,9 @@ public class GameLogic : ConsoleWrapper
     {
         if (!goToSwitchingShips && isGameInProgress)
         {
-        var results = CompareShipsAndDetermineWinner();
         var starTrekShip = StarTrekShipList.Find(x => x.Name == selectedStarTrekShipName);
         var starWarsShip = StarWarsShipList.Find(x => x.Name == selectedStarWarsShipName);
+        var results = CompareShipsAndDetermineWinner(selectedStarWarsShipName, selectedStarTrekShipName);
         WriteLine($"\n{selectedStarTrekShipName} has a speed of {starTrekShip?.WarpStd}");
         WriteLine($"\n{selectedStarWarsShipName} has a speed of {starWarsShip?.WarpStd}");
             if (results == "tied")
