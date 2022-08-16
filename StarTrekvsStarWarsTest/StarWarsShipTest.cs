@@ -16,16 +16,17 @@ public class StarWarsShipTest
     {
         List<StarWarsShip> StarWarsShipList1 = new List<StarWarsShip>
     {
-        new StarWarsShip(1, "nameOne", "thisModel", "thisShipClass", "55"),
-        new StarWarsShip(2, "nameTwo", "thatModel", "thatShipClass","15")
+        new StarWarsShip(1, "nameOne", "thisModel", "thisShipClass", "55", 6),
+        new StarWarsShip(2, "nameTwo", "thatModel", "thatShipClass","15", 11)
     };
 
         var switem = StarWarsShipList1.Find(switem => switem.Id == 1);
-        Assert.AreEqual(switem.Id, 1);
-        Assert.AreEqual(switem.Name, "nameOne");
-        Assert.AreEqual(switem.Model, "thisModel");
-        Assert.AreEqual(switem.ShipClass, "thisShipClass");
-        Assert.AreEqual(switem.Shields, "55");
+        Assert.AreEqual(switem?.Id, 1);
+        Assert.AreEqual(switem?.Name, "nameOne");
+        Assert.AreEqual(switem?.Model, "thisModel");
+        Assert.AreEqual(switem?.ShipClass, "thisShipClass");
+        Assert.AreEqual(switem?.Shields, "55");
+        Assert.AreEqual(switem?.WarpStd, 6);
     }
 
     [TestMethod]
@@ -38,23 +39,23 @@ public class StarWarsShipTest
     };
         var switem = StarWarsShipList2.Find(switem => switem.Id == 1);
 
-        Assert.AreEqual(switem.Id, 1);
-        Assert.AreEqual(switem.Name, "nameOne");
-        Assert.AreEqual(switem.Model, "thisModel");
-        Assert.AreEqual(switem.ShipClass, "thisShipClass");
-        Assert.AreEqual(switem.Length, 65.5);
-        Assert.AreEqual(switem.Width, 34);
-        Assert.AreEqual(switem.WarpStd, 3700);
-        Assert.AreEqual(switem.WarpCrs, 15);
-        Assert.AreEqual(switem.WarpMax, 55);
-        Assert.AreEqual(switem.SpeedAtmosMax, 800);
-        Assert.AreEqual(switem.Maneuverability, 50);
-        Assert.AreEqual(switem.Shields, "55");
-        Assert.AreEqual(switem.Hull, 20);
-        Assert.AreEqual(switem.Phasers, 12);
-        Assert.AreEqual(switem.Torpedoes, 24);
-        Assert.AreEqual(switem.Missiles, 6);
-        Assert.AreEqual(switem.TourInSpace, 365);
+        Assert.AreEqual(switem?.Id, 1);
+        Assert.AreEqual(switem?.Name, "nameOne");
+        Assert.AreEqual(switem?.Model, "thisModel");
+        Assert.AreEqual(switem?.ShipClass, "thisShipClass");
+        Assert.AreEqual(switem?.Length, 65.5);
+        Assert.AreEqual(switem?.Width, 34);
+        Assert.AreEqual(switem?.WarpStd, 3700);
+        Assert.AreEqual(switem?.WarpCrs, 15);
+        Assert.AreEqual(switem?.WarpMax, 55);
+        Assert.AreEqual(switem?.SpeedAtmosMax, 800);
+        Assert.AreEqual(switem?.Maneuverability, 50);
+        Assert.AreEqual(switem?.Shields, "55");
+        Assert.AreEqual(switem?.Hull, 20);
+        Assert.AreEqual(switem?.Phasers, 12);
+        Assert.AreEqual(switem?.Torpedoes, 24);
+        Assert.AreEqual(switem?.Missiles, 6);
+        Assert.AreEqual(switem?.TourInSpace, 365);
         Assert.AreEqual(StarWarsShipList2.Count, 2);
     }
 
@@ -67,23 +68,22 @@ public class StarWarsShipTest
         List<StarWarsShip> StarWarShipList3 = new List<StarWarsShip> { new StarWarsShip(StarWarsShipArry3) };
 
         var switem = StarWarShipList3.Find(switem => switem.Id == 1);
-        Assert.AreEqual(switem.Id, 1);
-        Assert.AreEqual(switem.Name, "nameOne");
-        Assert.AreEqual(switem.Model, "thisModel");
-        Assert.AreEqual(switem.ShipClass, "thisShipClass");
-        Assert.AreEqual(switem.Length, 65.5);
-        Assert.AreEqual(switem.Width, 34);
-        Assert.AreEqual(switem.WarpStd, 3700);
-        Assert.AreEqual(switem.WarpCrs, 15);
-        Assert.AreEqual(switem.WarpMax, 55);
-        Assert.AreEqual(switem.SpeedAtmosMax, 800);
-        Assert.AreEqual(switem.Maneuverability, 50);
-        Assert.AreEqual(switem.Shields, "55");
-        Assert.AreEqual(switem.Hull, 20);
-        Assert.AreEqual(switem.Phasers, 12);
-        Assert.AreEqual(switem.Torpedoes, 24);
-        Assert.AreEqual(switem.Missiles, 6);
-        Assert.AreEqual(switem.TourInSpace, 365);
+        Assert.AreEqual(switem?.Id, 1);
+        Assert.AreEqual(switem?.Name, "nameOne");
+        Assert.AreEqual(switem?.Model, "thisModel");
+        Assert.AreEqual(switem?.ShipClass, "thisShipClass");
+        Assert.AreEqual(switem?.Length, 65.5);
+        Assert.AreEqual(switem?.Width, 34);
+        Assert.AreEqual(switem?.WarpStd, 3700);
+        Assert.AreEqual(switem?.WarpCrs, 15);
+        Assert.AreEqual(switem?.WarpMax, 55);
+        Assert.AreEqual(switem?.SpeedAtmosMax, 800);
+        Assert.AreEqual(switem?.Maneuverability, 50);
+        Assert.AreEqual(switem?.Shields, "55");
+        Assert.AreEqual(switem?.Hull, 20);
+        Assert.AreEqual(switem?.Phasers, 12);
+        Assert.AreEqual(switem?.Torpedoes, 24);
+        Assert.AreEqual(switem?.Missiles, 6);
+        Assert.AreEqual(switem?.TourInSpace, 365);
     }
-
 }

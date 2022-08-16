@@ -10,11 +10,21 @@ namespace StarTrekvsStarWars;
 public class GameLogic : ConsoleWrapper
 {
     public bool isGameInProgress = true;
+    public bool goToSwitchingShips = false;
+    public bool displayShipSelection = true;
     public bool needToAskUserToPlay = true;
     public bool needToSelectStarTrekShip = true;
     public bool needToSelectStarWarsShip = true;
     public string? selectedStarWarsShipName;
     public string? selectedStarTrekShipName;
+    public List<StarTrekShip> StarTrekShipList;
+    public List<StarWarsShip> StarWarsShipList;
+
+    public GameLogic(List<StarTrekShip> starTrekShipList, List<StarWarsShip> starWarsShipList)
+    {
+        StarTrekShipList = starTrekShipList;
+        StarWarsShipList = starWarsShipList;
+    }
 
     public void TitleBar()
     {
@@ -44,12 +54,26 @@ public class GameLogic : ConsoleWrapper
         }
     }
 
-    public void CollectStarTrekShip(List<StarTrekShip> shipList)
+    public string? CompareShipsAndDetermineWinner(string starWarsShip, string starTrekShip)
+    {
+       var starTrekShipToCompare = StarTrekShipList.Find(x => x.Name == selectedStarTrekShipName);
+       var starWarsShipToCompare = StarWarsShipList.Find(x => x.Name == selectedStarWarsShipName);
+
+       if (starTrekShipToCompare?.WarpStd == starWarsShipToCompare?.WarpStd)
+        {
+            return "tied";
+        } 
+
+       var winner = starTrekShipToCompare?.WarpStd > starWarsShipToCompare?.WarpStd ? selectedStarTrekShipName : selectedStarWarsShipName;
+       return winner;
+    }
+
+    public int CollectStarTrekShip()
     {
         if (needToSelectStarTrekShip && isGameInProgress)
         {
-            int shipCount = shipList.Count;
-            printStarTrekList(shipList);
+            int shipCount = StarTrekShipList.Count;
+            printStarTrekList();
 
             WriteLine("\nPlease select Star Trek Ship. Enter the number from the list above");
             var playerResponse = ReadLine();
@@ -58,7 +82,7 @@ public class GameLogic : ConsoleWrapper
             while (!Int32.TryParse(playerResponse, out responseNum))
             {
                 Clear();
-                printStarTrekList(shipList);
+                printStarTrekList();
                 WriteLine($"\n{playerResponse} is not a valid number.");
                 WriteLine("Please enter a number.");
                 playerResponse = ReadLine();
@@ -67,41 +91,43 @@ public class GameLogic : ConsoleWrapper
             while (responseNum == 0 || responseNum > shipCount)
             {
                 Clear();
-                printStarTrekList(shipList);
+                printStarTrekList();
                 WriteLine($"\n{responseNum} is not an allowed number within the range.");
                 WriteLine($"Please enter a number between 1 and {shipCount}");
                 playerResponse = ReadLine();
                 while (!Int32.TryParse(playerResponse, out responseNum))
                 {
                     Clear();
-                    printStarTrekList(shipList);
+                    printStarTrekList();
                     WriteLine($"\n{playerResponse} is not a valid number.");
                     WriteLine("Please enter a number.");
                     playerResponse = ReadLine();
                 }
             }
-            selectedStarTrekShipName = shipList[responseNum - 1].Name;
+            selectedStarTrekShipName = StarTrekShipList[responseNum - 1].Name;
             needToSelectStarTrekShip = false;
             Clear();
+            return StarTrekShipList[responseNum - 1].Id;
         }
+        return 0;
     }
 
-    private void printStarTrekList(List<StarTrekShip> shipList)
+    private void printStarTrekList()
     {
         int shipCount = 1;
-        foreach (var ship in shipList)
+        foreach (var ship in StarTrekShipList)
         {
             WriteLine($"{shipCount}) {ship.Name}");
             shipCount++;
         }
     }
 
-    public void CollectStarWarsShip(List<StarWarsShip> shipList)
+    public int CollectStarWarsShip()
     {
         if (needToSelectStarWarsShip && isGameInProgress)
         {
-            int shipCount = shipList.Count;
-            printStarWarsList(shipList);
+            int shipCount = StarWarsShipList.Count;
+            printStarWarsList();
 
             WriteLine("\nPlease select Star Wars Ship. Enter the number from the list above");
             var playerResponse = ReadLine();
@@ -110,7 +136,7 @@ public class GameLogic : ConsoleWrapper
             while (!Int32.TryParse(playerResponse, out responseNum))
             {
                 Clear();
-                printStarWarsList(shipList);
+                printStarWarsList();
                 WriteLine($"\n{playerResponse} is not a valid number.");
                 WriteLine("Please enter a number.");
                 playerResponse = ReadLine();
@@ -120,29 +146,31 @@ public class GameLogic : ConsoleWrapper
             while (responseNum == 0 || responseNum > shipCount)
             {
                 Clear();
-                printStarWarsList(shipList);
+                printStarWarsList();
                 WriteLine($"\n{responseNum} is not an allowed number within the range.");
                 WriteLine($"Please enter a number between 1 and {shipCount}");
                 playerResponse = ReadLine();
                 while (!Int32.TryParse(playerResponse, out responseNum))
                 {
                     Clear();
-                    printStarWarsList(shipList);
+                    printStarWarsList();
                     WriteLine($"\n{playerResponse} is not a valid number.");
                     WriteLine("Please enter a number.");
                     playerResponse = ReadLine();
                 }
             }
-            selectedStarWarsShipName = shipList[responseNum - 1].Name;
+            selectedStarWarsShipName = StarWarsShipList[responseNum - 1].Name;
             needToSelectStarWarsShip = false;
             Clear();
+            return StarWarsShipList[responseNum - 1].Id;
         }
+        return 0;
     }
 
-    private void printStarWarsList(List<StarWarsShip> shipList)
+    private void printStarWarsList()
     {
         int shipCount = 1;
-        foreach (var ship in shipList)
+        foreach (var ship in StarWarsShipList)
         {
             WriteLine($"{shipCount}) {ship.Name}");
             shipCount++;
@@ -151,22 +179,21 @@ public class GameLogic : ConsoleWrapper
 
     public void ConfirmShipSelection()
     {
-        var goToSwitchingShips = false;
-        if (isGameInProgress)
+        if (displayShipSelection && isGameInProgress)
         {
             {
                 WriteLine($"You selected {selectedStarWarsShipName}.");
                 WriteLine("Would you like to change your Star Wars ship? (Y)es or (N)o");
-                var playerResponse = ReadLine();
+                var StarWarsPlayerResponse = ReadLine();
 
-                while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
+                while (StarWarsPlayerResponse?.ToLower() != "y" && StarWarsPlayerResponse?.ToLower() != "n")
                 {
                     WriteLine($"Please enter ONLY Y or N.");
-                    playerResponse = ReadLine();
+                    StarWarsPlayerResponse = ReadLine();
                     Clear();
                 }
 
-                if (playerResponse?.ToLower() == "y")
+                if (StarWarsPlayerResponse?.ToLower() == "y")
                 {
                     needToSelectStarWarsShip = true;
                     goToSwitchingShips = true;
@@ -174,28 +201,47 @@ public class GameLogic : ConsoleWrapper
 
                 WriteLine($"You selected {selectedStarTrekShipName}.");
                 WriteLine("Would you like to change your Star Trek ship? (Y)es or (N)o");
-                playerResponse = ReadLine();
+                var StarTrekPlayerResponse = ReadLine();
 
-                while (playerResponse?.ToLower() != "y" && playerResponse?.ToLower() != "n")
+                while (StarTrekPlayerResponse?.ToLower() != "y" && StarTrekPlayerResponse?.ToLower() != "n")
                 {
                     WriteLine($"Please enter ONLY Y or N.");
-                    playerResponse = ReadLine();
+                    StarTrekPlayerResponse = ReadLine();
                     Clear();
                 }
 
-                if (playerResponse?.ToLower() == "y")
+                if (StarTrekPlayerResponse?.ToLower() == "y")
                 {
                     needToSelectStarTrekShip = true;
                     goToSwitchingShips = true;
                 }
-
-                if (!goToSwitchingShips)
+                if (StarTrekPlayerResponse?.ToLower() == "n" && StarWarsPlayerResponse?.ToLower() == "n")
                 {
-                    isGameInProgress = false;
+                    displayShipSelection = false;
+                    goToSwitchingShips = false;
                 }
-
             }
             Clear();
+        }
+    }
+
+    public void DisplayWinner()
+    {
+        if (!goToSwitchingShips && isGameInProgress)
+        {
+        var starTrekShip = StarTrekShipList.Find(x => x.Name == selectedStarTrekShipName);
+        var starWarsShip = StarWarsShipList.Find(x => x.Name == selectedStarWarsShipName);
+        var results = CompareShipsAndDetermineWinner(selectedStarWarsShipName, selectedStarTrekShipName);
+        WriteLine($"\n{selectedStarTrekShipName} has a speed of {starTrekShip?.WarpStd}");
+        WriteLine($"\n{selectedStarWarsShipName} has a speed of {starWarsShip?.WarpStd}");
+            if (results == "tied")
+            {
+                WriteLine($"\nShips tied, please try again.");
+            } else
+            {
+                WriteLine($"\n{(results == selectedStarTrekShipName ? selectedStarTrekShipName : selectedStarWarsShipName)} is the winner! Because they have more speed.");
+            }
+            isGameInProgress = false;
         }
     }
 
